@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Gochi_Hand } from "next/font/google";
 import "./globals.css";
 import NavBar from "./components/navbar/page";
 import Footer from "./components/footer/page";
@@ -18,10 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} w-full`}>
+      <body className={`${inter.className} w-full bg-black flex flex-col  bg-grid-white/[0.1]`}>
         <NavBar />
-       {children}
-       <Footer />
+        {children}
+        <Footer />
       </body>
     </html>
   );

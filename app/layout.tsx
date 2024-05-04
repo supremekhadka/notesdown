@@ -7,8 +7,8 @@ import Footer from "./components/footer/page";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Note App",
-  description: "A basic CRUD app built using NextJS 13",
+  title: "Scribblore✍️",
+  description: "Scibblore✍️ - Scribble your Lore"
 };
 
 export default function RootLayout({

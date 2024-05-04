@@ -16,19 +16,12 @@ export default function Home() {
           <h1 className="text-6xl font-semibold">Scribblore ✍️</h1>
       <Link 
         href={`/notes`}
-        onMouseOver={play}
+        
       >
-        <button className="btn">
+        <button className="btn" onMouseOver={play}>
           <span>Scribble your Lore</span>  
         </button>
       </Link>
     </div>
   );
 }
-
-
-{/* <Link 
-        href={`/notes`}
-        className="mt-11 flex items-center justify-center rounded-xl w-60 h-16 text-lg text-center font-semibold text-sky-10 outline-4 bg-cyan-700 hover:bg-cyan-900"
-      >
-        Scribble your Lore</Link> */}

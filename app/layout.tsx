@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Gochi_Hand } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "./components/navbar/page";
 import Footer from "./components/footer/page";

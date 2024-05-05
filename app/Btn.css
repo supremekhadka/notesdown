@@ -1,0 +1,150 @@
+.Btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100px;
+    height: 40px;
+    border: none;
+    padding: 0px 20px;
+    background-color: black;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 5px 5px 0px black;
+    transition-duration: 0.3s;
+  }
+  
+.svg {
+    width: 13px;
+    position: absolute;
+    right: 0;
+    margin-right: 20px;
+    fill: white;
+    transition-duration: 0.3s;
+}
+
+.Btn:hover {
+    color: transparent;
+}
+
+.Btn:hover svg {
+    right: 43%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    transition-duration: 0.3s;
+}
+
+.Btn:active {
+    transform: translate(3px, 3px);
+    transition-duration: 0.3s;
+    box-shadow: 2px 2px 0px white;
+}
+  
+.DltBtn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 110px;
+    height: 40px;
+    border: none;
+    padding: 0px 20px;
+    background-color: rgb(203, 0, 0);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 5px 5px 0px rgb(143, 0, 0);
+    transition-duration: 0.3s;
+  }
+  
+.Dltsvg {
+    width: 16px;
+    position: absolute;
+    right: 0;
+    margin-right: 15px;
+    margin-top: 1px;
+    fill: white;
+    transition-duration: 0.3s;
+}
+
+.DltBtn:hover {
+    color: transparent;
+}
+
+.DltBtn:hover svg {
+    right: 43%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    transition-duration: 0.3s;
+}
+
+.DltBtn:active {
+    transform: translate(3px, 3px);
+    transition-duration: 0.3s;
+    box-shadow: 2px 2px 0px white;
+}
+  
+
+.SaveBtn{
+    background-color: rgb(2, 210, 2);
+    box-shadow: 5px 5px 0px rgb(1, 182, 1);
+}
+
+.SaveBtn:hover .Savesvg {
+    right: 43%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    transition-duration: 0.3s;
+}
+
+.SaveBtn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100px;
+    height: 40px;
+    border: none;
+    padding: 0px 20px;
+    background-color: rgb(1, 221, 1);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 5px 5px 0px rgb(1, 182, 1);
+    transition-duration: 0.3s;
+  }
+  
+.Savesvg {
+    width: 15px;
+    position: absolute;
+    right: 0;
+    margin-right: 17px;
+    margin-top: 2px;
+    fill: white;
+    transition-duration: 0.3s;
+}
+
+.SaveBtn:hover {
+    color: transparent;
+}
+
+.SaveBtn:hover svg {
+    right: 43%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    transition-duration: 0.3s;
+}
+
+.SaveBtn:active {
+    transform: translate(3px, 3px);
+    transition-duration: 0.3s;
+    box-shadow: 2px 2px 0px white;
+}

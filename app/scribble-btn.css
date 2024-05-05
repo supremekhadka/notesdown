@@ -2,7 +2,7 @@
 
 .btn {
     margin-top: 2em;
-    width: 210px;
+    width: 250px;
     padding: 0;
     border: none;
     transform: rotate(4deg);
@@ -20,7 +20,7 @@
   
 .btn span {
     background: #f1f5f8;
-    font-size: 1.25em;
+    font-size: 1.75em;
     color: #1b1b1b;
     display: block;
     padding: 1rem 1rem;

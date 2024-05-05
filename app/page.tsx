@@ -1,6 +1,7 @@
 'use client'
 import Link from "next/link";
 import './scribble-btn.css';
+import Footer from "./components/footer/page";
 
 export default function Home() {
   function play() {
@@ -10,7 +11,7 @@ export default function Home() {
   
 
   return (
-    <div className="h-[30rem] sm:h-[40rem] relative flex flex-col items-center justify-center">
+    <div className="min-h-[30rem] sm:min-h-[40rem] h-auto relative flex flex-col items-center justify-center">
           <h1 className="sm:text-5xl text-4xl font-semibold">Scribblore ✍️</h1>
       <Link 
         href={`/notes`}

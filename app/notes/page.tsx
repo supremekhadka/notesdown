@@ -88,15 +88,15 @@ export default function NotesPage() {
   };
 
   return (
-    <div className="z-10 min-h-[30rem] sm:min-h-[40rem] h-auto flex flex-col items-center relative">
+    <div className={`z-10 min-h-full sm:min-h-full h-auto flex flex-col items-center relative`}>
       <h1 className="text-[1.7em] sm:mt-2 font-semibold">Notes</h1>
-      <div className="z-20 fixed bottom-20 right-10 transform flex flex-col items-center">
+      <div className="z-20 fixed bottom-5 right-5 transform flex flex-col items-center">
         <button className="relative scribble-btn" onClick={handleAddNote}>
           <span>Scribble</span>  
         </button>
       </div>
       {showOverlay && (
-        <div className="fixed z-10 top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex justify-center items-center">
+        <div className="fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-40 flex justify-center items-center">
           <div className="bg-black p-8 rounded-md">
             <form className='flex flex-col items-center' onSubmit={handleSubmit}>
               <textarea name="note" rows={10} cols={40} className={`w-full ${gochiHand.className} outline-none bg-black text-cyan-50 text-2xl mb-4`} value={editedNote} onChange={(e) => setEditedNote(e.target.value)}></textarea>
@@ -108,8 +108,8 @@ export default function NotesPage() {
           </div>
         </div>
       )}
-      <div className="flex flex-wrap-reverse justify-center mt-5">
-      {notes.map((note, index) => (
+      <div className="flex flex-wrap justify-center mt-5">
+      {[...notes].reverse().map((note, index)  => (
           <div
             style={{ transform: `rotate(${noteRotations[index]}deg)` }}
             key={index}
@@ -117,7 +117,7 @@ export default function NotesPage() {
           >
             <div className={`${gochiHand.className} text-xl max-w-[50vw] text-ellipsis overflow-hidden mb-5`}>{note}</div>
             <div className="mt-2 flex gap-4 justify-center bottom-5">
-              <button onClick={() => handleEditNote(index)} className="Btn">
+              <button onClick={() => handleEditNote(notes.length - 1 - index)} className="Btn">
                 Edit
                 <svg viewBox="0 0 512 512" className="svg">
                   <path
@@ -125,7 +125,7 @@ export default function NotesPage() {
                   ></path>
                 </svg>
               </button>
-              <button onClick={() => handleDeleteNote(index)} className="DltBtn">
+              <button onClick={() => handleDeleteNote(notes.length - 1 - index)} className="DltBtn">
                 Delete
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi Dltsvg bi-trash-fill" viewBox="0 0 16 16"> <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/> </svg>
               </button>

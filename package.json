@@ -15,6 +15,7 @@
     "mini-svg-data-uri": "^1.4.4",
     "next": "14.2.3",
     "next-compose": "^0.0.2",
+    "npm": "^10.7.0",
     "react": "^18",
     "react-dom": "^18",
     "sharp": "^0.33.3",

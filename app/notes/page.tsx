@@ -1,8 +1,9 @@
 'use client'
+
 import '../scribble-btn.css';
 import '../Btn.css';
 import { Inter, Gochi_Hand } from 'next/font/google';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 const gochiHand = Gochi_Hand({ subsets: ["latin"], weight: ['400'] });
 
@@ -11,6 +12,22 @@ export default function NotesPage() {
   const [notes, setNotes] = useState<Array<string | null>>([]);
   const [editedNoteIndex, setEditedNoteIndex] = useState<number | null>(null);
   const [editedNote, setEditedNote] = useState('');
+  const [noteRotations, setNoteRotations] = useState<number[]>([]);
+
+  const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement> | KeyboardEvent) => {
+    if (e instanceof KeyboardEvent) {
+      e.preventDefault();
+    }
+
+    if (editedNoteIndex !== null) {
+      const updatedNotes = [...notes];
+      updatedNotes[editedNoteIndex] = editedNote;
+      setNotes(updatedNotes.filter(note => note !== null) as string[]);
+    } else {
+      setNotes([...notes, editedNote]);
+    }
+    setShowOverlay(false);
+  }, [notes, editedNoteIndex, editedNote]);
 
   useEffect(() => {
     const savedNotesString = localStorage.getItem('notes');
@@ -27,24 +44,32 @@ export default function NotesPage() {
     localStorage.setItem('notes', JSON.stringify(notes));
   }, [notes]);
 
+  useEffect(() => {
+    const calculatedRotations = notes.map(() => getRandomRotation());
+    setNoteRotations(calculatedRotations);
+  }, [notes]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (showOverlay && event.ctrlKey && event.key === 'Enter') {
+        handleSubmit(event);
+      }
+    };
+  
+    document.addEventListener('keydown', handleKeyDown);
+  
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleSubmit, showOverlay]);
+  
+  
+
   const handleAddNote = () => {
     setShowOverlay(true);
     setEditedNote('');
     setEditedNoteIndex(null);
   };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (editedNoteIndex !== null) {
-      const updatedNotes = [...notes];
-      updatedNotes[editedNoteIndex] = editedNote;
-      setNotes(updatedNotes.filter(note => note !== null) as string[]);
-    } else {
-      setNotes([...notes, editedNote]);
-    }
-    setShowOverlay(false);
-  };
-  
 
   const handleEditNote = (index: number) => {
     setEditedNoteIndex(index);
@@ -64,9 +89,9 @@ export default function NotesPage() {
 
   return (
     <div className="z-10 min-h-[30rem] sm:min-h-[40rem] h-auto flex flex-col items-center relative">
-      <h1 className="text-3xl sm:mt-12 font-semibold">Notes</h1>
+      <h1 className="text-[1.7em] sm:mt-2 font-semibold">Notes</h1>
       <div className="z-20 fixed bottom-20 right-10 transform flex flex-col items-center">
-        <button className="relative btn" onClick={handleAddNote}>
+        <button className="relative scribble-btn" onClick={handleAddNote}>
           <span>Scribble</span>  
         </button>
       </div>
@@ -84,8 +109,12 @@ export default function NotesPage() {
         </div>
       )}
       <div className="flex flex-wrap-reverse justify-center mt-5">
-        {notes.map((note, index) => (
-          <div style={{ transform: `rotate(${getRandomRotation()}deg)` }} key={index}  className="flex flex-col items-center justify-center relative text-slate-950 bg-gray-200 rounded-md m-4 p-10">
+      {notes.map((note, index) => (
+          <div
+            style={{ transform: `rotate(${noteRotations[index]}deg)` }}
+            key={index}
+            className="flex flex-col items-center justify-center relative text-slate-950 bg-gray-200 rounded-md m-4 p-10"
+          >
             <div className={`${gochiHand.className} text-xl max-w-[50vw] text-ellipsis overflow-hidden mb-5`}>{note}</div>
             <div className="mt-2 flex gap-4 justify-center bottom-5">
               <button onClick={() => handleEditNote(index)} className="Btn">

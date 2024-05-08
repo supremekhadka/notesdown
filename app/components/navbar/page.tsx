@@ -21,10 +21,10 @@ export default function NavBar(){
                 </Link>
             )}
             
-            <Link className="hidden sm:flex text-lg font-medium" href='/'>
+            <Link className={`hidden transition-all sm:flex text-lg ${pathname === '/' ? 'font-semibold' : 'font-light'} `} href='/'>
                 Home
             </Link>
-            <Link className="hidden sm:flex text-lg font-medium" href='/notes' >
+            <Link className={`hidden transition-all sm:flex text-lg ${pathname === '/notes' ? 'font-semibold' : 'font-light'} `} href='/notes' >
                 Notes
             </Link>
         </div>

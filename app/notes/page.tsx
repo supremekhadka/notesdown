@@ -88,8 +88,8 @@ export default function NotesPage() {
   };
 
   return (
-    <div className={`z-10 min-h-full sm:min-h-full h-auto flex flex-col items-center relative`}>
-      <h1 className="text-[1.7em] sm:mt-2 font-semibold">Notes</h1>
+    <div className={`z-10 min-h-full sm:min-h-full h-auto flex flex-col items-center`}>
+      <h1 className="text-[1.7em] sm:mt-2 sm:static absolute top-10 font-semibold">Notes</h1>
       <div className="z-20 fixed bottom-5 right-5 transform flex flex-col items-center">
         <button className="relative scribble-btn" onClick={handleAddNote}>
           <span>Scribble</span>  

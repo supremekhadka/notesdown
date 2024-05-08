@@ -26,7 +26,7 @@ To get started with Scribblore, follow these simple steps:
 
 4. Open your browser and visit [http://localhost:3000/](http://localhost:3000/) to start using Scribblore
 
-##OR
+## OR
 
 Follow through this quick link for the [demo](scribblore.vercel.app).
 

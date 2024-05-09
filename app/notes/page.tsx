@@ -4,6 +4,9 @@ import '../scribble-btn.css';
 import '../Btn.css';
 import { Inter, Gochi_Hand } from 'next/font/google';
 import { useState, useEffect, useCallback } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import DOMPurify from 'dompurify'
 
 const gochiHand = Gochi_Hand({ subsets: ["latin"], weight: ['400'] });
 
@@ -14,17 +17,25 @@ export default function NotesPage() {
   const [editedNote, setEditedNote] = useState('');
   const [noteRotations, setNoteRotations] = useState<number[]>([]);
 
+  const sanitizeContent = (content: string) => {
+    return DOMPurify.sanitize(content);
+  };
+
   const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement> | KeyboardEvent) => {
     if (e instanceof KeyboardEvent) {
       e.preventDefault();
     }
 
+    let sanitizedNote = sanitizeContent(editedNote);
     if (editedNoteIndex !== null) {
       const updatedNotes = [...notes];
       updatedNotes[editedNoteIndex] = editedNote;
       setNotes(updatedNotes.filter(note => note !== null) as string[]);
     } else {
-      setNotes([...notes, editedNote]);
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = editedNote;
+      sanitizedNote = tempDiv.textContent || tempDiv.innerText || '';
+      setNotes([...notes, sanitizedNote]);
     }
     setShowOverlay(false);
   }, [notes, editedNoteIndex, editedNote]);
@@ -63,7 +74,6 @@ export default function NotesPage() {
     };
   }, [handleSubmit, showOverlay]);
   
-  
 
   const handleAddNote = () => {
     setShowOverlay(true);
@@ -72,8 +82,9 @@ export default function NotesPage() {
   };
 
   const handleEditNote = (index: number) => {
+    const sanitizedContent = sanitizeContent(notes[index] ?? '');
     setEditedNoteIndex(index);
-    setEditedNote(notes[index] ?? '');
+    setEditedNote(sanitizeContent);
     setShowOverlay(true);
   };
 
@@ -87,6 +98,8 @@ export default function NotesPage() {
     return Math.floor(Math.random() * 5) - 3; // Random number between -15 to 15
   };
 
+  
+
   return (
     <div className={`z-10 min-h-full sm:min-h-full h-auto flex flex-col items-center`}>
       <h1 className="text-[1.7em] sm:mt-2 sm:static absolute top-10 font-semibold">Notes</h1>
@@ -97,10 +110,17 @@ export default function NotesPage() {
       </div>
       {showOverlay && (
         <div className="fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-40 flex justify-center items-center">
-          <div className="bg-black p-8 rounded-md">
+          <div className=" p-8 rounded-md">
             <form className='flex flex-col items-center' onSubmit={handleSubmit}>
-              <textarea name="note" rows={10} cols={40} className={`w-full ${gochiHand.className} outline-none bg-black text-cyan-50 text-2xl mb-4`} value={editedNote} onChange={(e) => setEditedNote(e.target.value)}></textarea>
-              <button type='submit' className="SaveBtn">
+              {/* <textarea name="note" rows={10} cols={40} className={`w-full ${gochiHand.className} outline-none bg-black text-cyan-50 text-2xl mb-4`} value={editedNote} onChange={(e) => setEditedNote(e.target.value)}></textarea> */}
+              <ReactQuill 
+                value={editedNote} 
+                theme='snow'
+                formats={['clean']}
+                onChange={(value) => setEditedNote(value)} 
+                className={`sm:w-full w-screen ${gochiHand.className} sm:h-72 h-[60vh] outline-none bg-black text-cyan-50 text-2xl mb-4`} 
+              />
+              <button type='submit' className="SaveBtn mt-16">
                 Save
                 <svg className='Savesvg svg bi bi-save2-fill' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"> <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v6h-2a.5.5 0 0 0-.354.854l2.5 2.5a.5.5 0 0 0 .708 0l2.5-2.5A.5.5 0 0 0 10.5 7.5h-2v-6z"/> </svg>
               </button>

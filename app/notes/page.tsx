@@ -100,6 +100,7 @@ export default function NotesPage() {
       {showOverlay && (
         <div className="fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-40 flex justify-center items-center">
           <div className=" p-8 rounded-md">
+          <div className=" p-8 rounded-md">
             <form className='flex flex-col items-center' onSubmit={handleSubmit}>
               <ReactQuill 
                 value={editedNote} 

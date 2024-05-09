@@ -4,6 +4,8 @@ import '../scribble-btn.css';
 import '../Btn.css';
 import { Inter, Gochi_Hand } from 'next/font/google';
 import { useState, useEffect, useCallback } from 'react';
+import ReactQuill from 'react-quill'; 
+import 'react-quill/dist/quill.snow.css';
 
 const gochiHand = Gochi_Hand({ subsets: ["latin"], weight: ['400'] });
 
@@ -97,10 +99,15 @@ export default function NotesPage() {
       </div>
       {showOverlay && (
         <div className="fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-40 flex justify-center items-center">
-          <div className="bg-black p-8 rounded-md">
+          <div className=" p-8 rounded-md">
             <form className='flex flex-col items-center' onSubmit={handleSubmit}>
-              <textarea name="note" rows={10} cols={40} className={`w-full ${gochiHand.className} outline-none bg-black text-cyan-50 text-2xl mb-4`} value={editedNote} onChange={(e) => setEditedNote(e.target.value)}></textarea>
-              <button type='submit' className="SaveBtn">
+              <ReactQuill 
+                value={editedNote} 
+                onChange={(value) => setEditedNote(value)} 
+                className={`sm:max-w-[1000px] sm:w-[80vw] w-screen h-[30rem] outline-none bg-black text-cyan-50 text-2xl mb-4`} 
+              />
+              {/* <textarea name="note" rows={10} cols={40} className={`w-full ${gochiHand.className} outline-none bg-black text-cyan-50 text-2xl mb-4`} value={editedNote} onChange={(e) => setEditedNote(e.target.value)}></textarea> */}
+              <button type='submit' className="SaveBtn mt-16">
                 Save
                 <svg className='Savesvg svg bi bi-save2-fill' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"> <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v6h-2a.5.5 0 0 0-.354.854l2.5 2.5a.5.5 0 0 0 .708 0l2.5-2.5A.5.5 0 0 0 10.5 7.5h-2v-6z"/> </svg>
               </button>

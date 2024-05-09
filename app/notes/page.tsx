@@ -25,7 +25,7 @@ export default function NotesPage() {
     if (e instanceof KeyboardEvent) {
       e.preventDefault();
     }
-
+  
     let sanitizedNote = sanitizeContent(editedNote);
     if (editedNoteIndex !== null) {
       const updatedNotes = [...notes];
@@ -40,7 +40,7 @@ export default function NotesPage() {
       }
     }
     setShowOverlay(false);
-  }, [notes, editedNoteIndex, editedNote]);
+  }, [notes, editedNoteIndex, editedNote]);  
 
   useEffect(() => {
     const savedNotesString = localStorage.getItem('notes');
@@ -63,18 +63,21 @@ export default function NotesPage() {
   }, [notes]);
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (showOverlay && event.ctrlKey && event.key === 'Enter') {
-        handleSubmit(event);
-      }
-    };
+    if (typeof window !== 'undefined') {
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (showOverlay && event.ctrlKey && event.key === 'Enter') {
+          handleSubmit(event);
+        }
+      };
   
-    document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('keydown', handleKeyDown);
   
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
+      return () => {
+        document.removeEventListener('keydown', handleKeyDown);
+      };
+    }
   }, [handleSubmit, showOverlay]);
+  
   
 
   const handleAddNote = () => {

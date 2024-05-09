@@ -32,10 +32,12 @@ export default function NotesPage() {
       updatedNotes[editedNoteIndex] = editedNote;
       setNotes(updatedNotes.filter(note => note !== null) as string[]);
     } else {
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = editedNote;
-      sanitizedNote = tempDiv.textContent || tempDiv.innerText || '';
-      setNotes([...notes, sanitizedNote]);
+      if (typeof window !== 'undefined') {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = editedNote;
+        sanitizedNote = tempDiv.textContent || tempDiv.innerText || '';
+        setNotes([...notes, sanitizedNote]);
+      }
     }
     setShowOverlay(false);
   }, [notes, editedNoteIndex, editedNote]);
@@ -97,8 +99,6 @@ export default function NotesPage() {
   const getRandomRotation = () => {
     return Math.floor(Math.random() * 5) - 3; // Random number between -15 to 15
   };
-
-  
 
   return (
     <div className={`z-10 min-h-full sm:min-h-full h-auto flex flex-col items-center`}>

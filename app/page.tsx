@@ -11,7 +11,7 @@ export default function Home() {
   
 
   return (
-    <div className="min-h-[30rem] sm:min-h-[35rem] h-max relative flex flex-col items-center justify-center">
+    <div className="hero-height relative flex flex-col items-center justify-center">
           <h1 className="sm:text-5xl text-4xl font-semibold">Scribblore ✍️</h1>
       <Link 
         href={`/notes`}

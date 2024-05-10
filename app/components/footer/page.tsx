@@ -11,7 +11,7 @@ export default function Footer() {
    <>
     {pathname !== '/notes' && 
       (<div className='footer absolute bottom-0 left-0 mt-20 z-1 h-16 w-full flex justify-center items-center'>
-          <h3>© 2024 Copyright: Supreme Khadka</h3>
+          <h3>© 2023 Copyright: Supreme Khadka</h3>
       </div>)
     }
 

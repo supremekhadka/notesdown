@@ -3,7 +3,7 @@
 import '../scribble-btn.css';
 import '../Btn.css';
 import { Inter, Gochi_Hand } from 'next/font/google';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 // import ReactQuill from 'react-quill'; 
 // import 'react-quill/dist/quill.snow.css';
 
@@ -15,6 +15,7 @@ export default function NotesPage() {
   const [editedNoteIndex, setEditedNoteIndex] = useState<number | null>(null);
   const [editedNote, setEditedNote] = useState('');
   const [noteRotations, setNoteRotations] = useState<number[]>([]);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement> | KeyboardEvent) => {
     if (e instanceof KeyboardEvent) {
@@ -31,6 +32,22 @@ export default function NotesPage() {
     setShowOverlay(false);
   }, [notes, editedNoteIndex, editedNote]);
 
+  const focusTextarea = () => {
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+      textareaRef.current.setSelectionRange(
+        textareaRef.current.value.length,
+        textareaRef.current.value.length
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (showOverlay) {
+      focusTextarea();
+    }
+  }, [showOverlay]);
+
   useEffect(() => {
     const savedNotesString = localStorage.getItem('notes');
     if (savedNotesString) {
@@ -40,7 +57,7 @@ export default function NotesPage() {
       setNotes([]);
     }
   }, []);
-  
+
 
   useEffect(() => {
     localStorage.setItem('notes', JSON.stringify(notes));
@@ -57,15 +74,15 @@ export default function NotesPage() {
         handleSubmit(event);
       }
     };
-  
+
     document.addEventListener('keydown', handleKeyDown);
-  
+
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [handleSubmit, showOverlay]);
-  
-  
+
+
 
   const handleAddNote = () => {
     setShowOverlay(true);
@@ -94,7 +111,7 @@ export default function NotesPage() {
       <h1 className="text-[1.7em] sm:mt-2 sm:static absolute top-10 font-semibold">Notes</h1>
       <div className="z-20 fixed bottom-5 right-5 transform flex flex-col items-center">
         <button className="relative scribble-btn" onClick={handleAddNote}>
-          <span>Scribble</span>  
+          <span>Scribble</span>
         </button>
       </div>
       {showOverlay && (
@@ -106,17 +123,26 @@ export default function NotesPage() {
                 onChange={(value) => setEditedNote(value)} 
                 className={`sm:max-w-[1000px] sm:w-[80vw] w-screen h-[30rem] outline-none bg-black text-cyan-50 text-2xl mb-4`} 
               /> */}
-              <textarea name="note" rows={10} cols={40} className={`w-full ${gochiHand.className} outline-none bg-black text-cyan-50 text-2xl mb-4`} value={editedNote} onChange={(e) => setEditedNote(e.target.value)}></textarea>
+              <textarea
+                ref={textareaRef}
+                name="note"
+                rows={10}
+                cols={40}
+                autoFocus
+                className={`w-full ${gochiHand.className} outline-none bg-black text-cyan-50 text-2xl mb-4`}
+                value={editedNote}
+                onChange={(e) => setEditedNote(e.target.value)}
+              ></textarea>
               <button type='submit' className="SaveBtn mt-16">
                 Save
-                <svg className='Savesvg svg bi bi-save2-fill' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"> <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v6h-2a.5.5 0 0 0-.354.854l2.5 2.5a.5.5 0 0 0 .708 0l2.5-2.5A.5.5 0 0 0 10.5 7.5h-2v-6z"/> </svg>
+                <svg className='Savesvg svg bi bi-save2-fill' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"> <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v6h-2a.5.5 0 0 0-.354.854l2.5 2.5a.5.5 0 0 0 .708 0l2.5-2.5A.5.5 0 0 0 10.5 7.5h-2v-6z" /> </svg>
               </button>
             </form>
           </div>
         </div>
       )}
       <div className="flex flex-wrap justify-center mt-5">
-      {[...notes].reverse().map((note, index)  => (
+        {[...notes].reverse().map((note, index) => (
           <div
             style={{ transform: `rotate(${noteRotations[index]}deg)` }}
             key={index}
@@ -134,7 +160,7 @@ export default function NotesPage() {
               </button>
               <button onClick={() => handleDeleteNote(notes.length - 1 - index)} className="DltBtn">
                 Delete
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi Dltsvg bi-trash-fill" viewBox="0 0 16 16"> <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/> </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi Dltsvg bi-trash-fill" viewBox="0 0 16 16"> <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" /> </svg>
               </button>
             </div>
           </div>

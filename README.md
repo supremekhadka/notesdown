@@ -28,6 +28,6 @@ To get started with Scribblore, follow these simple steps:
 
 ## OR
 
-Follow through this quick link for the [demo](scribblore.vercel.app).
+Follow through this quick link for the [demo](https://scribblore.vercel.app).
 
 ***Feedback is welcome with open arms!***

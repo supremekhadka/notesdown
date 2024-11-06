@@ -7,8 +7,8 @@ import Footer from "./components/footer/page";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Scribblore✍️",
-  description: "Scibblore✍️ - Scribble your Lore"
+  title: "NotesDown✍️",
+  description: "NotesDown✍️ - Note it down",
 };
 
 export default function RootLayout({
@@ -18,7 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} w-full min-h-screen bg-black flex flex-col  bg-grid-white/[0.1]`}>
+      <body
+        className={`${inter.className} w-full min-h-screen bg-black flex flex-col  bg-grid-white/[0.1]`}
+      >
         <NavBar />
         {children}
         <Footer />

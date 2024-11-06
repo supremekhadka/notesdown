@@ -1,6 +1,6 @@
-# Scribblore - Scribble your Lore
+# NotesDown - Note it Down
 
-Scribblore is a mini starter project for me to get acquainted with Next.js 13. It is a simple notes (CRUD) app tailored to assist in organizing thoughts, ideas, and notes effectively. With an intuitive interface and fundamental features, Scribblore aims to simplify the process of creating, editing, and managing notes seamlessly.
+NotesDown is a mini starter project for me to get acquainted with Next.js 13. It is a simple notes (CRUD) app tailored to assist in organizing thoughts, ideas, and notes effectively. With an intuitive interface and fundamental features, Scribblore aims to simplify the process of creating, editing, and managing notes seamlessly.
 
 ## Getting Started
 
